@@ -4,6 +4,7 @@ import os
 import json
 import requests
 from multiprocessing import Pool
+from slackclient import SlackClient
 
 app = Flask(__name__)
 
@@ -30,9 +31,27 @@ def send_mail(form_msg, form_name, form_email):
     print("going to send the msg")
     mail.send(msg)
     print("sent")
+    slack_notifier(form_msg, form_name, form_email)
     return None
 
 
+def slack_notifier(form_msg, form_name, form_email,count=0):
+    # pl. enter a valid api key for KOSS slack bot
+    api_key="xoxb-18hdfbvhhjd-dODofrfhjbfdjhbfdjhbdjh"
+    sc=SlackClient(api_key)
+
+    try:
+        sc.api_call("chat.postMessage",channel="#queries",text="Query from "+form_name+"<"+form_email+">\n"+"QUERY : "+form_msg+"\nPlease respond soon.")
+    except:
+        if count<=2: # trys 3 times before termination
+            print("error!!! trying again")
+            count+=1
+            slack_notifier(form_msg, form_name, form_email,count)
+        else:
+            print("terminated!!!")
+
+        
+        
 @app.route('/mail', methods=['POST'])
 def mail():
     pool = Pool(processes=10)
