@@ -32,7 +32,50 @@ def send_mail(form_msg, form_name, form_email):
         print("not sent")
     except Exception:
         print("Some other exception occured. Not sent")
+
+
+    from_email = Email(os.environ['KOSS_EMAIL'])
+    # print("email init")
+    to_email = Email(form_email)
+    # print("email init2")
+    subject = "Query Recieved"
+    # print("subject")
+    content = Content("text/plain", "Hi "+form_name+",\n\n"+"Your message has been recieved by us and we will respond to it soon."+"\nThank-you for communicating with us, hope your query will cleared by our team."+"\n\n\nKOSS IIT Kharagpur")
+    # print("content")
+    mail = Mail(from_email=from_email, subject=subject,
+                to_email=to_email, content=content)
+    # print("mail init")
+    try:
+        response = sg.client.mail.send.post(request_body=mail.get())
+        # print("sent")
+    except urllib.HTTPError:
+        print("not sent")
+    except Exception:
+        print("Some other exception occured. Not sent")
+
+    
+    slack_notifier(form_msg, form_name, form_email)    
     return None
+
+
+# slack notifier module
+def slack_notifier(form_msg, form_name, form_email,count=0):
+    headers = {"Content-Type": "application/json"}
+
+    data = json.dumps({"text": "Query from "+form_name+"<"+form_email+">\n\n"+"QUERY : "+form_msg+"\n\nPlease respond soon."})
+       
+    r = requests.post(os.environ["SLACK_WEBHOOK_URL"], headers=headers, data=data)
+
+    if r.status_code!=200:
+        if count<=2:
+            print("error "+str(r.status_code)+" !!! trying again")
+            count+=1
+            slack_notifier(form_msg, form_name, form_email,count)
+        else:
+            print("terminated!!!")
+    else:
+        print("notification sent!!!")
+
 
 
 @app.route('/mail', methods=['POST'])
