@@ -1,0 +1,7 @@
+Flask==0.12.0
+MarkupSafe==0.18
+Werkzeug==0.10.4
+itsdangerous==0.23
+Flask-Mail==0.9.1
+requests==2.12.4
+sendgrid==4.1.0
