@@ -48,7 +48,8 @@ def send_mail(form_msg, form_name, form_email):
                 to_email=to_email, content=content)
     # print("mail init")
     try:
-        response = sg.client.mail.send.post(request_body=mail.get())
+        # response = sg.client.mail.send.post(request_body=mail.get())
+        raise urllib.HTTPError
         # print("sent")
     except urllib.HTTPError:
         print("not sent")
@@ -67,7 +68,7 @@ def slack_notifier(form_msg="", form_name="", form_email="", mode=0, count=0):
 
     if mode == 0:
         data = json.dumps({"text": ("Query from {}<{}>\n\nQUERY : {}\n\n{}Please respond"
-                            " soon.".format(form_name,form_email,form_msg,"="*20+"\n"))})
+                            " soon.".format(form_name,form_email,form_msg,"="*17+"\n"))})
 
     elif mode == 1:
         data = json.dumps({"text": "HTTP Error occured in the mailing app\
