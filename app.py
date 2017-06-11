@@ -66,8 +66,8 @@ def slack_notifier(form_msg="", form_name="", form_email="", mode=0, count=0):
     headers = {"Content-Type": "application/json"}
 
     if mode == 0:
-        data = json.dumps({"text": ("Query from {}<{}>\n\nQUERY : {}\n\nPlease respond"
-                            " soon.".format(form_name,form_email,form_msg))})
+        data = json.dumps({"text": ("Query from {}<{}>\n\nQUERY : {}\n\n{}Please respond"
+                            " soon.".format(form_name,form_email,form_msg,"="*20+"\n"))})
 
     elif mode == 1:
         data = json.dumps({"text": "HTTP Error occured in the mailing app\
