@@ -41,8 +41,8 @@ def send_mail(form_msg, form_name, form_email):
     subject = "Query Recieved"
     # print("subject")
     content = Content("text/plain", "Hi "+form_name+",\n\n"+"Your message has been recieved by us and we \
-                       will respond to it soon."+"\nThank-you for communicating with us, hope your query \
-                       will cleared by our team."+"\n\n\nKOSS IIT Kharagpur")
+                       will respond to it soon."+"\nThank you for communicating with us. \
+                       Have a good day!."+"\n\n\nKOSS IIT Kharagpur")
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
@@ -66,9 +66,9 @@ def slack_notifier(form_msg="", form_name="", form_email="", mode=0, count=0):
     headers = {"Content-Type": "application/json"}
 
     if mode == 0:
-        data = json.dumps({"text": "Query from "+form_name+"<"+form_email+
-                           ">\n\n"+"QUERY : "+form_msg+"\n\nPlease respond \
-                           soon."})
+        data = json.dumps({"text": ("Query from {}<{}>\n\nQUERY : {}\n\nPlease respond"
+                            " soon.".format(form_name,form_email,form_msg))})
+
     elif mode == 1:
         data = json.dumps({"text": "HTTP Error occured in the mailing app\
                                \n\n Please Check."})
