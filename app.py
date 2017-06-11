@@ -5,6 +5,7 @@ import requests
 from multiprocessing import Pool
 import sendgrid
 from sendgrid.helpers.mail import *
+import urllib
 
 app = Flask(__name__)
 
@@ -27,7 +28,7 @@ def send_mail(form_msg, form_name, form_email):
     try:
         response = sg.client.mail.send.post(request_body=mail.get())
         # print("sent")
-    except urllib.HTTPError:
+    except urllib.error.HTTPError:
         print("not sent")
         slack_notifier(mode=1)
     except Exception:
@@ -48,10 +49,9 @@ def send_mail(form_msg, form_name, form_email):
                 to_email=to_email, content=content)
     # print("mail init")
     try:
-        # response = sg.client.mail.send.post(request_body=mail.get())
-        raise KeyError("something")
+        response = sg.client.mail.send.post(request_body=mail.get())
         # print("sent")
-    except urllib.HTTPError:
+    except urllib.error.HTTPError:
         print("not sent")
         slack_notifier(mode=1)
     except Exception:
@@ -65,7 +65,6 @@ def send_mail(form_msg, form_name, form_email):
 # slack notifier module
 def slack_notifier(form_msg="", form_name="", form_email="", mode=0, count=0):
     headers = {"Content-Type": "application/json"}
-
     if mode == 0:
         data = json.dumps({"text": ("Query from {}<{}>\n\nQUERY : {}\n\n{}Please respond"
                             " soon.".format(form_name,form_email,form_msg,"="*17+"\n"))})
