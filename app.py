@@ -5,6 +5,7 @@ import requests
 from multiprocessing import Pool
 import sendgrid
 from sendgrid.helpers.mail import *
+import urllib
 
 app = Flask(__name__)
 
@@ -49,7 +50,7 @@ def send_mail(form_msg, form_name, form_email):
     # print("mail init")
     try:
         # response = sg.client.mail.send.post(request_body=mail.get())
-        raise urllib.HTTPError
+        raise urllib.HTTPError()
         # print("sent")
     except urllib.HTTPError:
         print("not sent")
