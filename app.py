@@ -15,25 +15,26 @@ def send_mail(form_msg, form_name, form_email):
     # print("init")
     from_email = Email(form_email)
     # print("email init")
-    to_email = Email(os.environ['KOSS_EMAIL'])
+    to_email = [Email(os.environ['KOSS_EMAIL']),Email('dibyadascool@gmail.com')]
     # print("email init2")
     subject = "Query"
     # print("subject")
     content = Content("text/plain", "Query sent by:- " + form_name + "\n\n\n" +
                       "Message:- " + form_msg + "\n")
     # print("content")
-    mail = Mail(from_email=from_email, subject=subject,
-                to_email=to_email, content=content)
-    # print("mail init")
-    try:
-        response = sg.client.mail.send.post(request_body=mail.get())
-        # print("sent")
-    except urllib.error.HTTPError:
-        print("not sent")
-        slack_notifier(mode=1)
-    except Exception:
-        print("Some other exception occured. Not sent")
-        slack_notifier(mode=2)
+    for id in to_email:
+        mail = Mail(from_email=from_email, subject=subject,
+                    to_email=id, content=content)
+        # print("mail init")
+        try:
+            response = sg.client.mail.send.post(request_body=mail.get())
+            # print("sent")
+        except urllib.error.HTTPError:
+            print("not sent")
+            slack_notifier(mode=1)
+        except Exception:
+            print("Some other exception occured. Not sent")
+            slack_notifier(mode=2)
 
     from_email = Email(os.environ['KOSS_EMAIL'])
     # print("email init")
