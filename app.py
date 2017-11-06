@@ -113,6 +113,62 @@ def captcha():
         return ("Not sent", 400, {'Access-Control-Allow-Origin': '*'})
 
 
+@app.route('/update_sheet',methods=['POST'])
+def update_sheet():
+    sheet_url = "https://script.google.com/macros/s/AKfycbzvd8_P6BrP-C04-4KwbM3z-3Mh7_BGnkmDCRCU-Vg5BSug_ETx/exec"
+    json_d = request.form.to_dict()
+    print(json_d)
+    r = requests.post(sheet_url,data=json_d)
+    print(r.status_code)
+    reg_mail(json_d['name'],json_d['email'])
+    return ("updated", 200, {'Access-Control-Allow-Origin': '*'})
+
+
+def reg_mail(name,to_email):
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
+    # print("init")
+    from_email = Email(to_email)
+    # print("email init")
+    to_email = [Email('dibyadascool@gmail.com')]
+    # print("email init2")
+    subject = "Mentor Registration"
+    # print("subject")
+    content = Content("text/plain", "New registration by:- " + name );
+    # print("content")
+    for id in to_email:
+        mail = Mail(from_email=from_email, subject=subject,
+                    to_email=id, content=content)
+        # print("mail init")
+        try:
+            response = sg.client.mail.send.post(request_body=mail.get())
+            # print("sent")
+        except urllib.error.HTTPError:
+            print("not sent")
+        except Exception:
+            print("Some other exception occured. Not sent")
+
+    from_email = Email(os.environ['KOSS_EMAIL'])
+    # print("email init")
+    to_email = Email(to_email)
+    # print("email init2")
+    subject = "Registration Successful"
+    # print("subject")
+    content = Content("text/plain", "Hi "+name+",\n\n"+"Your registration has been successful. \
+                       "+"\n Hope you have a good time at KWoC. \
+                       Have a good day!."+"\n\n\nKOSS IIT Kharagpur")
+    # print("content")
+    mail = Mail(from_email=from_email, subject=subject,
+                to_email=to_email, content=content)
+    # print("mail init")
+    try:
+        response = sg.client.mail.send.post(request_body=mail.get())
+        # print("sent")
+    except urllib.error.HTTPError:
+        print("not sent")
+    except Exception:
+        print("Some other exception occured. Not sent")
+    return None
+
 # if __name__ == "__main__":  # This is for local testin
 #     app.run(host='localhost', port=3453, debug=True)
 
