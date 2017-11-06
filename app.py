@@ -124,10 +124,10 @@ def update_sheet():
     return ("updated", 200, {'Access-Control-Allow-Origin': '*'})
 
 
-def reg_mail(name,to_email):
+def reg_mail(name,form_email):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
     # print("init")
-    from_email = Email(to_email)
+    from_email = Email(form_email)
     # print("email init")
     to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]
     # print("email init2")
@@ -149,7 +149,7 @@ def reg_mail(name,to_email):
 
     from_email = Email(os.environ['KOSS_EMAIL'])
     # print("email init")
-    to_email = Email(to_email)
+    to_email = Email(form_email)
     # print("email init2")
     subject = "Registration Successful"
     # print("subject")
