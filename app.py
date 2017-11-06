@@ -129,7 +129,7 @@ def reg_mail(name,to_email):
     # print("init")
     from_email = Email(to_email)
     # print("email init")
-    to_email = [Email('dibyadascool@gmail.com')]
+    to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]
     # print("email init2")
     subject = "Mentor Registration"
     # print("subject")
