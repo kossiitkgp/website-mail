@@ -165,7 +165,8 @@ def reg_mail(name,to_email):
         # print("sent")
     except urllib.error.HTTPError:
         print("not sent")
-    except Exception:
+    except Exception as e:
+        print(e)
         print("Some other exception occured. Not sent")
     return None
 
