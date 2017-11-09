@@ -10,12 +10,12 @@ import urllib
 app = Flask(__name__)
 
 message = """
-Hey,
+Hey,<br><br>
 
 Thanks for mentoring and registering your project with us. We will get in touch with you soon!
-
-Regards,
-Kharagpur Open Source Society
+<br><br>
+Regards,<br>
+<strong>Kharagpur Open Source Society</strong>
 """
 
 def send_mail(form_msg, form_name, form_email):
@@ -159,9 +159,10 @@ def reg_mail(name,form_email):
     # print("email init2")
     subject = "Registration Successful"
     # print("subject")
-    content = Content("text/html", "Hi <strong>{}</strong>,<br><br> Your project and mentor registration has been successful. \
-                       Hope you have a good time at KWoC. \
-                       Have a good day!.<br><br> <b>KOSS IIT Kharagpur</b>".format(name))
+    # content = Content("text/html", "Hi <strong>{}</strong>,<br><br> Your project and mentor registration has been successful. \
+    #                    Hope you have a good time at KWoC. \
+    #                    Have a good day!.<br><br> <b>KOSS IIT Kharagpur</b>".format(name))
+    content = Content('text/html',message)
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
