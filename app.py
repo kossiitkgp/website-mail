@@ -153,9 +153,9 @@ def reg_mail(name,form_email):
     # print("email init2")
     subject = "Registration Successful"
     # print("subject")
-    content = Content("text/plain", "Hi {},\n\n Your project and mentor registration has been successful. \
+    content = Content("text/html", "Hi <strong>{}</strong>,<br><br> Your project and mentor registration has been successful. \
                        Hope you have a good time at KWoC. \
-                       Have a good day!.\n\n\n KOSS IIT Kharagpur".format(name))
+                       Have a good day!.<br><br><br> <b>KOSS IIT Kharagpur</b>".format(name))
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
