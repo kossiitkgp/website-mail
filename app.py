@@ -9,7 +9,7 @@ import urllib
 
 app = Flask(__name__)
 
-message = """
+reg_message = """
 Hey,<br><br>
 
 Thanks for mentoring and registering your project with us. We will get in touch with you soon!
@@ -17,6 +17,18 @@ Thanks for mentoring and registering your project with us. We will get in touch 
 Regards,<br>
 <strong>Kharagpur Open Source Society</strong>
 """
+
+query_message = """
+
+Hi {},<br><br>
+
+Your message has been recieved by us and we will respond to it soon. Thank you for communicating with us. Have a good day!.
+<br><br>
+Regards, <br>
+<strong>Kharagpur Open Source Society</strong>
+
+"""
+
 
 def send_mail(form_msg, form_name, form_email):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
@@ -50,7 +62,7 @@ def send_mail(form_msg, form_name, form_email):
     # print("email init2")
     subject = "Query Recieved"
     # print("subject")
-    content = Content("text/plain", message)
+    content = Content("text/html", query_message)
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
@@ -162,7 +174,7 @@ def reg_mail(name,form_email):
     # content = Content("text/html", "Hi <strong>{}</strong>,<br><br> Your project and mentor registration has been successful. \
     #                    Hope you have a good time at KWoC. \
     #                    Have a good day!.<br><br> <b>KOSS IIT Kharagpur</b>".format(name))
-    content = Content('text/html',message)
+    content = Content('text/html',reg_message)
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
