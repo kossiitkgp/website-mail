@@ -62,7 +62,7 @@ def send_mail(form_msg, form_name, form_email):
     # print("email init2")
     subject = "Query Recieved"
     # print("subject")
-    content = Content("text/html", query_message)
+    content = Content("text/html", query_message.format(form_name))
     # print("content")
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
