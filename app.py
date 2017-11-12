@@ -31,54 +31,123 @@ Regards, <br>
 
 
 def send_mail(form_msg, form_name, form_email):
-    sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
-    # print("init")
-    from_email = Email(form_email)
-    # print("email init")
-    to_email = [Email(os.environ['KOSS_EMAIL']),Email('dibyadascool@gmail.com')]
-    # print("email init2")
-    subject = "Query"
-    # print("subject")
-    content = Content("text/plain", "Query sent by:- " + form_name + "\n\n\n" +
-                      "Message:- " + form_msg + "\n")
-    # print("content")
-    for id in to_email:
-        mail = Mail(from_email=from_email, subject=subject,
-                    to_email=id, content=content)
-        # print("mail init")
-        try:
-            response = sg.client.mail.send.post(request_body=mail.get())
-            # print("sent")
-        except urllib.error.HTTPError:
-            print("not sent")
-            slack_notifier(mode=1)
-        except Exception:
-            print("Some other exception occured. Not sent")
-            slack_notifier(mode=2)
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    #Next, log in to the server
+    #print(str(os.environ['PASSWD']))
+    server.login(str(os.environ['EMAIL']), str(os.environ['PASSWD']))
 
-    from_email = Email(os.environ['KOSS_EMAIL'])
-    # print("email init")
-    to_email = Email(form_email)
-    # print("email init2")
-    subject = "Query Recieved"
-    # print("subject")
-    content = Content("text/html", query_message.format(form_name))
-    # print("content")
-    mail = Mail(from_email=from_email, subject=subject,
-                to_email=to_email, content=content)
-    # print("mail init")
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+
+    me = "Kharagpur Winter of Code <kwoc@kossiitkgp.in>"
+    you = form_email
+
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = mail_subject
+    msg['From'] = me
+    msg['To'] = you
+    #Send the mail
+    # html = mail_body
+    html ="""\
+    <html>
+      <head></head>
+      <body>
+        <p>Hello mentor!<br>
+           Welcome to KWoC! Thanks a lot for registering your project.<br>
+           Please read the manual <a href="https://kwoc.kossiitkgp.in/static/files/KWoCMentorManual.pdf">here</a> if you haven't already done so.
+           We will reach out to you soon!
+        </p>
+        Thanks and regards,
+        <a href="https://kossiitkgp.in">Kharagpur Open Source Society</a>,
+        <a href="http://iitkgp.ac.in/">Indian Institute of Technology, Kharagpur</a>.
+      </body>
+    </html>
+    """ # The /n separates the message from the headers
+
+    #part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+
+    #msg.attach(part1)
+    msg.attach(part2)
+
     try:
-        response = sg.client.mail.send.post(request_body=mail.get())
-        # print("sent")
-    except urllib.error.HTTPError:
-        print("not sent")
-        slack_notifier(mode=1)
-    except Exception:
-        print("Some other exception occured. Not sent")
-        slack_notifier(mode=2)
+        server.sendmail(me, you, msg.as_string())
+        server.sendmail(me, me, msg.as_string())
+    except:
+        try:
+            del(server)
+            os.system("sleep 5m")
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            #Next, log in to the server
+            #print(str(os.environ['PASSWD']))
+            server.login(str(os.environ['EMAIL']), str(os.environ['PASSWD']))
+            server.sendmail(me, you, msg.as_string())
+            server.sendmail(me, me, msg.as_string())
+            return True
+        except:
+            try:
+                del(server)
+                os.system("sleep 5m")
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+                #Next, log in to the server
+                #print(str(os.environ['PASSWD']))
+                server.login(str(os.environ['EMAIL']), str(os.environ['PASSWD']))
+                server.sendmail(me, you, msg.as_string())
+                server.sendmail(me, me, msg.as_string())
+                return True
+            except:
+                try:  
+                    sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
+                    # print("init")
+                    from_email = Email(form_email)
+                    # print("email init")
+                    to_email = [Email(os.environ['KOSS_EMAIL']),Email('dibyadascool@gmail.com')]
+                    # print("email init2")
+                    subject = "Query"
+                    # print("subject")
+                    content = Content("text/plain", "Query sent by:- " + form_name + "\n\n\n" +
+                                      "Message:- " + form_msg + "\n")
+                    # print("content")
+                    for id in to_email:
+                        mail = Mail(from_email=from_email, subject=subject,
+                                    to_email=id, content=content)
+                        # print("mail init")
+                        try:
+                            response = sg.client.mail.send.post(request_body=mail.get())
+                            # print("sent")
+                        except urllib.error.HTTPError:
+                            print("not sent")
+                            slack_notifier(mode=1)
+                        except Exception:
+                            print("Some other exception occured. Not sent")
+                            slack_notifier(mode=2)
 
-    slack_notifier(form_msg, form_name, form_email)
-    return None
+                    from_email = Email(os.environ["Kharagpur Winter of Code <kwoc@kossiitkgp.in>"])
+                    # print("email init")
+                    to_email = Email(form_email)
+                    # print("email init2")
+                    subject = "Query Recieved"
+                    # print("subject")
+                    content = Content("text/html", query_message.format(form_name))
+                    # print("content")
+                    mail = Mail(from_email=from_email, subject=subject,
+                                to_email=to_email, content=content)
+                    # print("mail init")
+                    try:
+                        response = sg.client.mail.send.post(request_body=mail.get())
+                        # print("sent")
+                    except urllib.error.HTTPError:
+                        print("not sent")
+                        slack_notifier(mode=1)
+                    except Exception:
+                        print("Some other exception occured. Not sent")
+                        slack_notifier(mode=2)
+
+                    slack_notifier(form_msg, form_name, form_email)
+                    return None
 
 
 # slack notifier module
