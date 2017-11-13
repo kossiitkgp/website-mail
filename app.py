@@ -24,7 +24,7 @@ Hello {},<br><br>
 
 Thank you for registering your project {} in Kharagpur Winter of Code 2017. We will get in touch with you soon!
 <br>
-Meanwhile you can read the Mentor's manual <a href='https://kwoc.kossiitkgp.in/static/files/KWoCMentorManual.pdf'>here</a> <br><br>.
+Meanwhile you can read the Mentor's manual <a href='https://kwoc.kossiitkgp.in/static/files/KWoCMentorManual.pdf'>here</a>.<br><br>
 
 Regards,<br>
 <strong>Kharagpur Open Source Society</strong>
