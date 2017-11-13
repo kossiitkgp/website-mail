@@ -9,14 +9,28 @@ import urllib
 
 app = Flask(__name__)
 
-reg_message = """
-Hey,<br><br>
+# reg_message_old = """
+# Hey,<br><br>
 
-Thanks for mentoring and registering your project with us. We will get in touch with you soon!
-<br><br>
+# Thanks for mentoring and registering your project with us. We will get in touch with you soon!
+# <br><br>
+# Regards,<br>
+# <strong>Kharagpur Open Source Society</strong>
+# """
+
+
+reg_message = """
+Hello {},<br><br>
+
+Thank you for registering your project {} in Kharagpur Winter of Code 2017. We will get in touch with you soon!
+<br>
+Meanwhile you can read the Mentor's manual over here : https://kwoc.kossiitkgp.in/static/files/KWoCMentorManual.pdf <br>
+
 Regards,<br>
 <strong>Kharagpur Open Source Society</strong>
 """
+
+
 
 query_message = """
 
@@ -138,50 +152,39 @@ def update_sheet():
     print(json_d)
     r = requests.post(sheet_url,data=json_d)
     print(r.status_code)
-    reg_mail(json_d['name'],json_d['email'])
+    reg_mail(json_d['name'],json_d['email'],json_d['project'])
     return ("updated", 200, {'Access-Control-Allow-Origin': '*'})
 
 
-def reg_mail(name,form_email):
+def reg_mail(name,form_email,project):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
-    # print("init")
     from_email = Email(form_email)
-    # print("email init")
     to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]
-    # print("email init2")
+
     subject = "Mentor Registration"
-    # print("subject")
+
     content = Content("text/plain", "New registration by:- " + name );
-    # print("content")
+
     for id in to_email:
         mail = Mail(from_email=from_email, subject=subject,
                     to_email=id, content=content)
-        # print("mail init")
         try:
             response = sg.client.mail.send.post(request_body=mail.get())
-            # print("sent")
         except urllib.error.HTTPError:
             print("not sent")
         except Exception:
             print("Some other exception occured. Not sent")
 
     from_email = Email(os.environ['KOSS_EMAIL'])
-    # print("email init")
     to_email = Email(form_email)
-    # print("email init2")
-    subject = "Registration Successful"
-    # print("subject")
-    # content = Content("text/html", "Hi <strong>{}</strong>,<br><br> Your project and mentor registration has been successful. \
-    #                    Hope you have a good time at KWoC. \
-    #                    Have a good day!.<br><br> <b>KOSS IIT Kharagpur</b>".format(name))
-    content = Content('text/html',reg_message)
-    # print("content")
+    subject = "Thank you for registering project {} in Kharagpur Winter of Code 2017".format(project)
+
+    content = Content('text/html',reg_message.format(name,project))
+
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
-    # print("mail init")
     try:
         response = sg.client.mail.send.post(request_body=mail.get())
-        # print("sent")
     except urllib.error.HTTPError:
         print("not sent")
     except Exception as e:
