@@ -49,7 +49,7 @@ def send_mail(form_msg, form_name, form_email):
     # print("init")
     from_email = Email(form_email)
     # print("email init")
-    to_email = [Email(os.environ['KOSS_EMAIL'],name="Kharagpur Open Source Society"),Email(email'dibyadascool@gmail.com')]
+    to_email = [os.environ['KOSS_EMAIL'],Email('dibyadascool@gmail.com')]
     # print("email init2")
     subject = "Query"
     # print("subject")
@@ -70,7 +70,7 @@ def send_mail(form_msg, form_name, form_email):
             print("Some other exception occured. Not sent")
             slack_notifier(mode=2)
 
-    from_email = Email(os.environ['KOSS_EMAIL'])
+    from_email = Email(email=os.environ['KOSS_EMAIL'],name="Kharagpur Open Source Society")
     # print("email init")
     to_email = Email(form_email)
     # print("email init2")
@@ -159,7 +159,7 @@ def update_sheet():
 def reg_mail(name,form_email,project):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
     from_email = Email(form_email)
-    to_email = [Email('dibyadascool@gmail.com'),Email(email=os.environ['KWOC_EMAIL'],name="Kharagpur Winter of Code")]  # os.environ['KWOC_EMAIL']
+    to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]  # os.environ['KWOC_EMAIL']
 
     subject = "Mentor Registration"
 
