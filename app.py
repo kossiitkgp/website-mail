@@ -159,7 +159,7 @@ def update_sheet():
 def reg_mail(name,form_email,project):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
     from_email = Email(form_email)
-    to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]
+    to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KWOC_EMAIL'])]
 
     subject = "Mentor Registration"
 
@@ -175,7 +175,7 @@ def reg_mail(name,form_email,project):
         except Exception:
             print("Some other exception occured. Not sent")
 
-    from_email = Email(os.environ['KOSS_EMAIL'])
+    from_email = Email(os.environ['KWOC_EMAIL'])
     to_email = Email(form_email)
     subject = "Thank you for registering project {} in Kharagpur Winter of Code 2017".format(project)
 
