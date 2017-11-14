@@ -49,7 +49,7 @@ def send_mail(form_msg, form_name, form_email):
     # print("init")
     from_email = Email(form_email)
     # print("email init")
-    to_email = [os.environ['KOSS_EMAIL'],Email('dibyadascool@gmail.com')]
+    to_email = [Email(os.environ['KOSS_EMAIL']),Email('dibyadascool@gmail.com')]
     # print("email init2")
     subject = "Query"
     # print("subject")
