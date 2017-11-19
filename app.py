@@ -31,6 +31,18 @@ Regards,<br>
 """
 
 
+stu_message = """
+Hello {},<br><br>
+
+Thank you for registering in Kharagpur Winter of Code 2017. We will get in touch with you soon!
+<br>
+Meanwhile you can read the Student's manual <a href='https://kwoc.kossiitkgp.in/static/files/KWoCStudentManual.pdf'>here</a>.<br><br>
+
+Regards,<br>
+<strong>Kharagpur Open Source Society</strong>
+"""
+
+
 
 query_message = """
 
@@ -156,6 +168,17 @@ def update_sheet():
     return ("updated", 200, {'Access-Control-Allow-Origin': '*'})
 
 
+@app.route('/update_student_sheet',methods=['POST'])
+def update_student_sheet():
+    sheet_url = "https://script.google.com/macros/s/AKfycbzC-dEH9uOnp4PYs3rKmu5VJ4AwrdMygA33S0Uyj_SxWmX3SMg/exec"
+    json_d = request.form.to_dict()
+    print(json_d)
+    r = requests.post(sheet_url,data=json_d)
+    print(r.status_code)
+    stu_reg_mail(json_d['name'],json_d['email'])
+    return ("updated", 200, {'Access-Control-Allow-Origin': '*'})
+
+
 def reg_mail(name,form_email,project):
     sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
     from_email = Email(form_email)
@@ -180,6 +203,42 @@ def reg_mail(name,form_email,project):
     subject = "Thank you for registering project {} in Kharagpur Winter of Code 2017".format(project)
 
     content = Content('text/html',reg_message.format(name,project))
+
+    mail = Mail(from_email=from_email, subject=subject,
+                to_email=to_email, content=content)
+    try:
+        response = sg.client.mail.send.post(request_body=mail.get())
+    except urllib.error.HTTPError:
+        print("not sent")
+    except Exception as e:
+        print(e)
+        print("Some other exception occured. Not sent")
+    return None
+
+def stu_reg_mail(name,form_email):
+    sg = sendgrid.SendGridAPIClient(apikey=os.environ['SENDGRID_API_KEY'])
+    from_email = Email(form_email)
+    to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]  # os.environ['KWOC_EMAIL']
+
+    subject = "Mentor Registration"
+
+    content = Content("text/plain", "New registration by:- " + name );
+
+    for id in to_email:
+        mail = Mail(from_email=from_email, subject=subject,
+                    to_email=id, content=content)
+        try:
+            response = sg.client.mail.send.post(request_body=mail.get())
+        except urllib.error.HTTPError:
+            print("not sent")
+        except Exception:
+            print("Some other exception occured. Not sent")
+
+    from_email = Email(email=os.environ['KWOC_EMAIL'],name="Kharagpur Winter of Code")
+    to_email = Email(form_email)
+    subject = "Thank you for registering in Kharagpur Winter of Code 2017".format(project)
+
+    content = Content('text/html',stu_message.format(name,project))
 
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
