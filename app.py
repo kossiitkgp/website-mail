@@ -220,7 +220,7 @@ def stu_reg_mail(name,form_email):
     from_email = Email(form_email)
     to_email = [Email('dibyadascool@gmail.com'),Email(os.environ['KOSS_EMAIL'])]  # os.environ['KWOC_EMAIL']
 
-    subject = "Mentor Registration"
+    subject = "Student Registration"
 
     content = Content("text/plain", "New registration by:- " + name );
 
