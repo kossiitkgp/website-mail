@@ -236,9 +236,9 @@ def stu_reg_mail(name,form_email):
 
     from_email = Email(email=os.environ['KWOC_EMAIL'],name="Kharagpur Winter of Code")
     to_email = Email(form_email)
-    subject = "Thank you for registering in Kharagpur Winter of Code 2017".format(project)
+    subject = "Thank you for registering in Kharagpur Winter of Code 2017"
 
-    content = Content('text/html',stu_message.format(name,project))
+    content = Content('text/html',stu_message.format(name))
 
     mail = Mail(from_email=from_email, subject=subject,
                 to_email=to_email, content=content)
