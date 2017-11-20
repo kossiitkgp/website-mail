@@ -104,7 +104,7 @@ stu_message = """
 								 </tr>
 								 <tr>
 									<td style="padding: 20px 0 30px 0;">
-										<b>You have been successfully registered for the Kharagpur Winter of Code</b>. <br>
+										<b>You have been successfully registered for Kharagpur Winter of Code</b>. <br>
 										<br><br>
 										Kharagpur Winter of Code is one of the many initiatives all around the world for introducing students to Open Source.
 										Google organizes <a href="https://en.wikipedia.org/wiki/Google_Summer_of_Code" target="_blank">Google Summer of Code</a>
