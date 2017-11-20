@@ -34,7 +34,7 @@ proj_message = """
 <table align="center" border="1" cellpadding="0" cellspacing="0" width="600">
 								<tr>
 								<td bgcolor="#00081F" align="center" style="padding: 40px 0 30px 0;">
-										<img src="http://kwoc.kossiitkgp.in/static/images/kwoc_logo.png" width="300" height=auto style="display: block;" />
+										<img src="https://kwoc.kossiitkgp.in/static/images/kwoc_logo.png" width="300" height=auto style="display: block;" />
 								</td>
 								</tr>
 								<tr>
@@ -91,7 +91,7 @@ stu_message = """
 <table align="center" border="1" cellpadding="0" cellspacing="0" width="600">
 								<tr>
 								<td bgcolor="#00081F" align="center" style="padding: 40px 0 30px 0;">
-										<img src="http://kwoc.kossiitkgp.in/static/images/kwoc_logo.png" width="300" height=auto style="display: block;" />
+										<img src="https://kwoc.kossiitkgp.in/static/images/kwoc_logo.png" width="300" height=auto style="display: block;" />
 								</td>
 								</tr>
 								<tr>
@@ -136,7 +136,7 @@ stu_message = """
 											<li>Join the <a href="https://www.facebook.com/groups/kwoc2016" target="blank">facebook group</a> and interact with the community.
 											<li>Read the <a href="https://kwoc.kossiitkgp.in/static/files/KWoCStudentManual.pdf" target="_blank">student manual.</a>
 											<li>Read this <a href="https://blog.kossiitkgp.in/an-informal-introduction-to-kwoc-62fc5e686f79" target="_blank">blog </a>to get a larger picture of the program.
-											<li>Go ahead with choosing your projects <a href="http://kwoc.kossiitkgp.in/projects" target="_blank">here.</a>
+											<li>Go ahead with choosing your projects <a href="https://kwoc.kossiitkgp.in/projects" target="_blank">here.</a>
 										</ul
 										</div>
 									</td>
