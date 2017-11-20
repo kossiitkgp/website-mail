@@ -30,6 +30,62 @@ Regards,<br>
 <strong>Kharagpur Open Source Society</strong>
 """
 
+proj_message = """
+<table align="center" border="1" cellpadding="0" cellspacing="0" width="600">
+								<tr>
+								<td bgcolor="#00081F" align="center" style="padding: 40px 0 30px 0;">
+										<img src="http://kwoc.kossiitkgp.in/static/images/kwoc_logo.png" width="300" height=auto style="display: block;" />
+								</td>
+								</tr>
+								<tr>
+								<td bgcolor="#ffffff">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%" style="text-align: center">
+								 <tr>
+									<td>
+									 <b> Hello {} !</b>
+									</td>
+								 </tr>
+								 <tr>
+									<td style="padding: 20px 0 30px 0;">
+										<b>Your project {} has been accepted in Kharagpur Winter of Code</b>. <br>
+										<br><br>
+										Kharagpur Winter of Code is one of the many initiatives all around the world for introducing students to Open Source.
+										Google organizes <a href="https://en.wikipedia.org/wiki/Google_Summer_of_Code" target="_blank">Google Summer of Code</a>
+										every summer where thousands of students apply and get selected in the
+										program. They work the entire summer and get paid a handsome reward. While we, sitting at comfy rooms, will be doing
+										a similar program, on a very small scale. Throughout December, we’ll be mentoring students new to the open source
+										software development world along with other mentors who sign up for the program, helping them to create their first
+										Pull Request, and writing their first test suite.
+										<br><br> Now that students registrations has opened, please create a detailed ReadMe file and open some beginner level issues
+										in your project, if you have not done it yet. The program commences on 1st Decemeber and therefore, please make sure you have
+										enough issues by then.
+									</td>
+								 </tr>
+								 <tr>
+									<td> <!--
+										<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										 <tr>
+											<td width="260" valign="top">
+											 <div style="border:1px solid #353535; border-radius:5px;""><a href="kwoc.kossiitkgp.in" target="_blank">Visit Website</a></div>
+											</td>
+											<td style="font-size: 0; line-height: 0;" width="20">
+											 &nbsp;
+											</td>
+											<td width="260" valign="top">
+											 <a href="kwoc.kossiitkgp.in/resources" target="_blank"><div style="border:1px solid #353535; border-radius:5px; color:white; background-color: #008080"">See Resources</div></a>
+											</td>
+										 </tr>
+									 </table> -->
+										<div style="text-align: left">
+										<ul>
+											<li>Join the <a href="https://www.facebook.com/groups/kwoc2016" target="blank">facebook group</a> and interact with the community.
+											<li> Read the <a href="https://kwoc.kossiitkgp.in/static/files/KWoCMentorManual.pdf" target="_blank">mentor manual.</a>
+										</ul
+										</div>
+									</td>
+								 </tr>
+								</table>
+"""
 
 stu_message = """
 <table align="center" border="1" cellpadding="0" cellspacing="0" width="600">
